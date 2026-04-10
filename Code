@@ -1,0 +1,49 @@
+# ============================================================
+#   Basic Arithmetic Operations in RISC-V Assembly
+#   Simulator: Ripes (Single-Core, Single-Cycle CPU)
+#   Operations: Addition, Subtraction, Multiplication, Division
+# ============================================================
+
+.data
+    # --- Input Values ---
+    num1:    .word 20        # First operand
+    num2:    .word 5         # Second operand
+
+    # --- Result Labels (for display in memory) ---
+    add_res: .word 0         # Will store result of addition
+    sub_res: .word 0         # Will store result of subtraction
+    mul_res: .word 0         # Will store result of multiplication
+    div_res: .word 0         # Will store result of division
+
+.text
+.globl main
+main:
+    # ── Load operands from memory into registers ──────────────
+    la   t0, num1            # Load address of num1 into t0
+    lw   t1, 0(t0)           # t1 = value at num1 → t1 = 20
+
+    la   t0, num2            # Load address of num2 into t0
+    lw   t2, 0(t0)           # t2 = value at num2 → t2 = 5
+
+    # ── ADDITION: t3 = t1 + t2 ───────────────────────────────
+    add  t3, t1, t2          # t3 = 20 + 5 = 25
+    la   t0, add_res         # Load address of add_res
+    sw   t3, 0(t0)           # Store result → add_res = 25
+
+    # ── SUBTRACTION: t4 = t1 - t2 ────────────────────────────
+    sub  t4, t1, t2          # t4 = 20 - 5 = 15
+    la   t0, sub_res         # Load address of sub_res
+    sw   t4, 0(t0)           # Store result → sub_res = 15
+
+    # ── MULTIPLICATION: t5 = t1 * t2 ─────────────────────────
+    mul  t5, t1, t2          # t5 = 20 * 5 = 100
+    la   t0, mul_res         # Load address of mul_res
+    sw   t5, 0(t0)           # Store result → mul_res = 100
+
+    # ── DIVISION: t6 = t1 / t2 ───────────────────────────────
+    div  t6, t1, t2          # t6 = 20 / 5 = 4
+    la   t0, div_res         # Load address of div_res
+    sw   t6, 0(t0)           # Store result → div_res = 4
+
+    # ── End of Program ────────────────────────────────────────
+    ebreak                   # Halt the simulator
